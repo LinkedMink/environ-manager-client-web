@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Container, Row, Col } from 'react-bootstrap';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.sass';
+import HeaderPanel from './Components/HeaderPanel';
+import NavigationMenuContainer from './Containers/NavigationMenuContainer';
+import LoginContainer from './Containers/LoginContainer';
+import HomeScreen from './Components/Screens/HomeScreen';
+import AboutScreen from './Components/Screens/AboutScreen';
+import AlertDialogPanel from './Containers/AlertDialogPanel';
+
+class App extends React.Component {
+  render() {
+    return (
+      <Router>
+        <HeaderPanel />
+        <Container className="app-container" fluid="true">
+          <Row>
+            <Col xs="12" sm="12" md="2">
+              <NavigationMenuContainer />
+            </Col>
+            <Col xs="12" sm="12" md="10">
+              <Route exact path="/" component={HomeScreen} />
+              <Route exact path="/about" component={AboutScreen} />
+              <Route exact path="/login" component={LoginContainer} />
+            </Col>
+          </Row>
+        </Container>
+        <AlertDialogPanel />
+      </Router>
+    );
+  }
 }
 
 export default App;
