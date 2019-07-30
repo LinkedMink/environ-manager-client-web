@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Row, Col, Form } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom'
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -28,6 +29,10 @@ class LoginScreen extends React.Component {
   }
 
   render() {
+    if (this.props.isLoggedIn) {
+      return <Redirect to='/' />
+    }
+
     return (
       <div>
         <h2>Login</h2>

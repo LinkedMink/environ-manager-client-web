@@ -10,6 +10,7 @@ import store from "./Store";
 require('jquery');
 require('bootstrap');
 require('bootstrap/dist/css/bootstrap.css');
+require('open-iconic/font/css/open-iconic-bootstrap.css');
 
 ReactDOM.render(
     <Provider store={store}>

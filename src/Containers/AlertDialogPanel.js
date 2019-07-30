@@ -19,4 +19,4 @@ function mapStateToProps (state) {
 
 const AlertDialogPanel = connect(mapStateToProps, mapDispatchToProps)(DialogPanel);
 
-export default AlertDialogPanel
+export default AlertDialogPanel;

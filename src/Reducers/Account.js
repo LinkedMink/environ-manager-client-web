@@ -1,22 +1,14 @@
-import { SAVE_SESSION } from '../Actions/Account';
-
-// allowed links are based on login state
-const guestLinks = [ 
-  { path: "/about", name: "About" },
-  { path: "/login", name: "Login" }
-];
-
-const authenticatedLinks = [ 
-  { path: "/", name: "Home" },
-  { path: "/about", name: "About" },
-  { path: "/logout", name: "Logout" }
-];
+import { SAVE_SESSION, DESTROY_SESSION } from '../Actions/Account';
 
 function account(state = {}, action) {
   if (action.type === SAVE_SESSION) {
-    return Object.assign({}, state, action.payload, { links: authenticatedLinks });
+    return Object.assign({}, state, action.payload);
+  } else if (action.type === DESTROY_SESSION) {
+    return Object.assign({}, state, {
+      serverBaseUrl: null, email: null, userId: null, token: null, roles: null
+    });
   } else {
-    return Object.assign({}, state, action.payload, { links: guestLinks });
+    return Object.assign({}, state, action.payload);
   }
 }
 

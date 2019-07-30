@@ -1,47 +1,43 @@
 import { connect } from "react-redux";
 
+import RequestHelper from "../Helpers/RequestHelper";
 import LoginScreen from "../Components/Screens/LoginScreen";
 import { saveSession } from "../Actions/Account";
-import { alertError } from "../Actions/Alert";
+
+function mapStateToProps (state) {
+  return {
+    isLoggedIn: state.account.token ? true : false
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
     login: credentials => {
-      let options = {
-        method: 'POST',
-        headers: { 
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ Email: credentials.email, Password: credentials.password })
+      let requestData = { 
+        Email: credentials.email, 
+        Password: credentials.password 
       };
 
-      return fetch(`${credentials.serverBaseUrl}/authentication`, options)
-        .then(response => {
-          if (!response.ok) {
-            dispatch(alertError(`${response.status} : ${response.statusText}`));
-            return Promise.resolve(null);
-          }
+      let responseHandler = data => {
+        return saveSession(
+          credentials.serverBaseUrl, 
+          credentials.email, 
+          data.userId, 
+          data.token, 
+          data.roles);
+      }
 
-          return response.json();
-        })
-        .then(json => {
-          if (json && json.code === 0) {
-            dispatch(saveSession(
-              credentials.serverBaseUrl, 
-              credentials.email, 
-              json.data.UserId, 
-              json.data.Token, 
-              json.data.Roles));
-          }
-        })
-        .catch(
-          error => dispatch(alertError(error.message))
-        );
+      return RequestHelper.getJsonResponse(
+        dispatch, 
+        'authentication', 
+        responseHandler, 
+        true,
+        requestData, 
+        credentials.serverBaseUrl);
     }
   };
 }
 
-const LoginContainer = connect(null, mapDispatchToProps)(LoginScreen);
+const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
 
 export default LoginContainer
