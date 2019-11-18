@@ -6,7 +6,7 @@ import { saveStatus, saveLogEntries } from "../Actions/DeviceData";
 
 function mapStateToProps (state, ownProps) {
   const foundDevice = state.deviceData.devices.find(function(element) {
-    return element.id === ownProps.match.params.id;
+    return element.id === Number(ownProps.match.params.id);
   });
   
   return {
@@ -29,7 +29,7 @@ function mapDispatchToProps(dispatch) {
 
     getDeviceHistoryToStore: deviceId => {
       const responseHandler = data => {
-        return saveLogEntries(data);
+        return saveLogEntries(Number(deviceId), data);
       }
 
       return RequestHelper.getJsonResponse(

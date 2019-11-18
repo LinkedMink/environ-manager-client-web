@@ -7,7 +7,9 @@ class LoginScreen extends React.Component {
     super(props);
 
     this.state = {
-      serverBaseUrl: "",
+      serverBaseUrl: process.env.REACT_APP_SERVER_BASE_URL 
+        ? process.env.REACT_APP_SERVER_BASE_URL 
+        : "",
       email: "",
       password: ""
     };

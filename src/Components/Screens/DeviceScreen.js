@@ -1,4 +1,5 @@
 import React from 'react';
+import { Row, Col } from 'react-bootstrap';
 import { VictoryLine, VictoryChart, VictoryTheme } from 'victory';
 
 import './DeviceScreen.sass';
@@ -70,41 +71,39 @@ class DeviceScreen extends React.Component {
             Description: {device.description}<br/>
             Received Time: {device.lastUpdateReceived}
           </p>
-          <div className="btn-group" role="group" aria-label="Chart Selector">
-            <button type="button" className="btn btn-secondary" data-target="#deviceTemperatureChart" 
-              aria-expanded="false" aria-controls="deviceTemperatureChart">Temperature</button>
-            <button type="button" className="btn btn-secondary" data-target="#deviceHumidityChart" 
-              aria-expanded="false" aria-controls="deviceHumidityChart">Humidity</button>
-          </div>
         </div>
-        <div className="collapse multi-collapse" id="deviceTemperatureChart">
-          <VictoryChart
-            theme={VictoryTheme.material}>
+        <Row>
+          <Col xs="12" sm="6">
+            <h4>Temperature (Celcius)</h4>
+            <VictoryChart
+              theme={VictoryTheme.material}>
+                <VictoryLine
+                style={{
+                  data: { stroke: "#c43a31" },
+                  parent: { border: "1px solid #ccc"}
+                }}
+                interpolation="natural"
+                scale={{ x: "time", y: "linear" }}
+                data={this.getTemperatureHistory()}
+              />
+            </VictoryChart>
+          </Col>
+          <Col xs="12" sm="6">
+            <h4>Relative Humidity (%)</h4>
+            <VictoryChart
+              theme={VictoryTheme.material}>
               <VictoryLine
-              style={{
-                data: { stroke: "#c43a31" },
-                parent: { border: "1px solid #ccc"}
-              }}
-              interpolation="natural"
-              scale={{ x: "time", y: "linear" }}
-              data={this.getTemperatureHistory()}
-            />
-          </VictoryChart>
-        </div>
-        <div className="collapse multi-collapse" id="deviceHumidityChart">
-          <VictoryChart
-            theme={VictoryTheme.material}>
-            <VictoryLine
-              style={{
-                data: { stroke: "#c43a31" },
-                parent: { border: "1px solid #ccc"}
-              }}
-              interpolation="natural"
-              scale={{ x: "time", y: "linear" }}
-              data={this.getHumidityHistory()}
-            />
-          </VictoryChart>
-        </div>
+                style={{
+                  data: { stroke: "#c43a31" },
+                  parent: { border: "1px solid #ccc"}
+                }}
+                interpolation="natural"
+                scale={{ x: "time", y: "linear" }}
+                data={this.getHumidityHistory()}
+              />
+            </VictoryChart>
+          </Col>
+        </Row>
       </div>
     );
   }

@@ -16,9 +16,12 @@ export function saveStatus(status) {
   };
 }
 
-export function saveLogEntries(entries) {
+export function saveLogEntries(deviceId, page) {
   return { 
     type: SAVE_LOG_ENTRIES, 
-    payload: entries
+    payload: {
+      id: deviceId,
+      page: page
+    }
   };
 }

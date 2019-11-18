@@ -5,10 +5,6 @@ import { LinkContainer } from 'react-router-bootstrap'
 import './NavigationMenu.sass';
 
 class NavigationMenu extends React.Component {
-  getIconSrc(icon) {
-    return `/img/open-iconic.min.svg#${icon}`;
-  }
-
   getIconClass(icon) {
     return `oi oi-${icon}`;
   }
@@ -19,10 +15,9 @@ class NavigationMenu extends React.Component {
         {this.props.links.map((value, index) => {
           return (
             <LinkContainer exact={true} key={index} to={value.path}>
-              <Nav.Link>
-                <svg viewBox="0 0 8 8">
-                  <use href={this.getIconSrc(value.icon)}></use>
-                </svg>
+              <Nav.Link active={false}>
+                <span className={this.getIconClass(value.icon)} 
+                      title={value.name} aria-hidden="true"></span>
                 {value.name}
               </Nav.Link>
             </LinkContainer>

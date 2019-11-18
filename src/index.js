@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 
 import './index.css';
 import App from './App';
-import * as serviceWorker from './ServiceWorker';
+import * as serviceWorker from './serviceWorker';
 import store from "./Store";
 
 require('jquery');

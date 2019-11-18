@@ -22,9 +22,9 @@ function deviceData(state = {}, action) {
 
     let copyDevices = state.devices.slice();
     var foundDevice = copyDevices.find(function(element) {
-      return element.id === action.payload[0].id;
+      return element.id === action.payload.id;
     });
-    foundDevice.logEntries = action.payload;
+    foundDevice.logEntries = action.payload.page.records;
 
     return Object.assign({}, state, { 
       devices: copyDevices, 
